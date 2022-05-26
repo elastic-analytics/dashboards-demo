@@ -1,4 +1,4 @@
-name: deploy
+name: Deploy Opensearch and Opensearch Dashboards
 
 on:
     push:
@@ -8,6 +8,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
     steps:
       - uses: actions/checkout@v2
 
