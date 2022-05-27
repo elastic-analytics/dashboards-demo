@@ -23,5 +23,5 @@ jobs:
         env:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
-          plugins: "" # Optional
+          plugins: "" # optional
           command: kubectl get pods
