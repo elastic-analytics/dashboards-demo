@@ -25,6 +25,7 @@ jobs:
         with:
           plugins: "" # optional
           command: |
+            ls -l
             # helm uninstall opensearch --namespace default
             # helm uninstall dashboards --namespace default
             # kubectl delete pvc opensearch-cluster-master-opensearch-cluster-master-0
