@@ -24,4 +24,4 @@ jobs:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
           plugins: "" # optional
-          command: kubectl get pods
+          command: kubectl get svc
