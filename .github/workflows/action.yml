@@ -24,4 +24,7 @@ jobs:
           KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
         with:
           plugins: "" # optional
-          command: kubectl get svc
+          command: |
+            helm uninstall opensearch --namespace default
+            helm uninstall dashboards --namespace default
+            kubectl delete pvc opensearch-cluster-master-opensearch-cluster-master-0
