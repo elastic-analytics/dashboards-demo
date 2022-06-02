@@ -25,9 +25,9 @@ jobs:
         with:
           plugins: "" # optional
           command: |
-            # helm uninstall opensearch --namespace default
-            # helm uninstall dashboards --namespace default
-            # kubectl delete pvc opensearch-cluster-master-opensearch-cluster-master-0
+            helm uninstall opensearch --namespace default
+            helm uninstall dashboards --namespace default
+            kubectl delete pvc opensearch-cluster-master-opensearch-cluster-master-0
             helm repo add opensearch https://opensearch-project.github.io/helm-charts/
             helm repo update
             helm search repo opensearch
