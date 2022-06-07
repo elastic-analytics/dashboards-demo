@@ -1,7 +1,9 @@
 name: Run function tests and install sample data
 
 on:
-    workflow_dispatch:
+    push:
+        branches:
+            - liutaodemo
 
 jobs:
   deploy:
