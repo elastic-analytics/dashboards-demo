@@ -1,0 +1,20 @@
+name: Run function tests and install sample data
+
+on:
+    workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: opensearchstaging/ci-runner:ci-runner-rockylinux8-opensearch-dashboards-integtest-v2
+    steps:
+      - name: Checkout function test repo
+        uses: actions/checkout@v3
+        with:
+          repository: opensearch-project/opensearch-dashboards-functional-test
+          path: functionaltest
+
+      - name: Install dependencies for function test
+        run: |
+          cd functiontest
+          npm install
+
