@@ -13,10 +13,8 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: opensearch-project/opensearch-dashboards-functional-test
-          path: functionaltest
 
       - name: Install dependencies for function test
         run: |
-          cd functiontest
           npm install
 
