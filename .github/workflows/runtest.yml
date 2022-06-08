@@ -16,7 +16,7 @@ jobs:
           run: echo "hello"
   # This second job in this workflow, it is configuring the function test
   config-test:
-    needs: prepare-ubuntu
+      needs: prepare-ubuntu
       runs-on: ubuntu-latest
       steps:
         - name: Checkout function test repo
