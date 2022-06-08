@@ -6,15 +6,22 @@ on:
             - liutaodemo
 
 jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout function test repo
-        uses: actions/checkout@v3
-        with:
-          repository: opensearch-project/opensearch-dashboards-functional-test
+  job1:
+    deploy:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v3
+  job2:
+    needs: job1
+    deploy:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout function test repo
+          uses: actions/checkout@v3
+          with:
+            repository: opensearch-project/opensearch-dashboards-functional-test
 
-      - name: Install dependencies for function test
-        run: |
-          npm install
+        - name: Install dependencies for function test
+          run: |
+            npm install
 
