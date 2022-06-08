@@ -6,14 +6,17 @@ on:
             - liutaodemo
 
 jobs:
-  job1:
-    deploy:
+  # The first job in this workflow, it is praparing the ubuntu
+  prepare-ubuntu:
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v3
-  job2:
-    needs: job1
-    deploy:
+
+        - name: prepare-ubuntu -> Step1
+          run: echo "hello"
+  # This second job in this workflow, it is configuring the function test
+  config-test:
+    needs: prepare-ubuntu
       runs-on: ubuntu-latest
       steps:
         - name: Checkout function test repo
