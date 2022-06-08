@@ -1,0 +1,53 @@
+name: Deploy OS and OSD
+
+on:
+    push:
+        branches:
+            - liutaodemo
+
+jobs:
+  # The first job in this workflow, it is praparing the ubuntu
+  deploy-os-osd:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Step 1 - Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+
+      - name: Setp 2 - Deploy OS and OSD via helm
+        uses: elastic-analytics/dashboards-action@demodev
+        env:
+          KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+        with:
+          plugins: "" # optional
+          command: |
+            helm uninstall opensearch --namespace default
+            helm uninstall dashboards --namespace default
+            kubectl delete pvc opensearch-cluster-master-opensearch-cluster-master-0
+            helm repo add opensearch https://opensearch-project.github.io/helm-charts/
+            helm repo update
+            helm search repo opensearch
+            helm install opensearch opensearch/opensearch -f /usr/os.yaml
+            helm install dashboards opensearch/opensearch-dashboards -f /usr/osd.yaml
+  # This second job in this workflow, it is configuring the function test
+  config-test:
+      needs: deploy-os-osd
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout function test repo
+          uses: actions/checkout@v3
+          with:
+            repository: Flyingliuhub/opensearch-dashboards-functional-test
+            ref: devdemo
+
+        - name: Install dependencies for function test
+          run: |
+            npm install
+            npm install -g yarn
+            yarn cypress run --spec "cypress/integration/core-opensearch-dashboards/opensearch-dashboards/*.js" --config "baseUrl=https://publicdemo-1997563990.us-west-2.elb.amazonaws.com" --env "openSearchUrl=https://publicdemo-1997563990.us-west-2.elb.amazonaws.com,SECURITY_ENABLED=true,username=admin,password=Admin_123"
+
