@@ -28,5 +28,5 @@ jobs:
           run: |
             npm install
             npm install -g yarn
-            yarn cypress run --spec "cypress/integration/core-opensearch-dashboards/opensearch-dashboards/*.js" --config "baseUrl=https://publicdemo-1997563990.us-west-2.elb.amazonaws.com/_dashboards" --env "openSearchUrl=https://publicdemo-1997563990.us-west-2.elb.amazonaws.com,SECURITY_ENABLED=true,username=${{ secrets.OSD_USER }},password=${{ secrets.OSD_PASSWORD }},ENDPOINT_WITH_PROXY=true"
+            yarn cypress run --spec "cypress/integration/core-opensearch-dashboards/opensearch-dashboards/*.js" --config "baseUrl=https://publicdemo-1997563990.us-west-2.elb.amazonaws.com/" --env "openSearchUrl=https://publicdemo-1997563990.us-west-2.elb.amazonaws.com,SECURITY_ENABLED=true,username=${{ secrets.OSD_USER }},password=${{ secrets.OSD_PASSWORD }}"
 
